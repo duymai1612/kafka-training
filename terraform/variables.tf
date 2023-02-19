@@ -3,3 +3,5 @@
 variable "do_token" {}
 
 variable "ssh_key_id" {}
+
+variable "ssh_public_key" {}
