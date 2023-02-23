@@ -12,15 +12,4 @@ resource "digitalocean_droplet" "kafka" {
   size   = "s-4vcpu-8gb"
   ssh_keys = [digitalocean_ssh_key.default.fingerprint]
   user_data = file("kafka-server.sh")
-  ipv6               = true
-  private_networking = true
-}
-
-resource "digitalocean_reserved_ip" "kafka" {
-  region = "sgp1"
-}
-
-resource "digitalocean_reserved_ip_assignment" "kafka" {
-  ip_address = digitalocean_reserved_ip.kafka.ip_address
-  droplet_id = digitalocean_droplet.kafka.id
 }
