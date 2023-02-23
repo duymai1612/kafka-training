@@ -1,35 +1,4 @@
-#!/bin/bash
-# INSTALL DOCKER
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
 
-# INSTALL DOCKER COMPOSE
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-# INSTALL GIT
-# sudo apt update
-# sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc
-# mkdir tmp
-# cd /tmp
-# curl -o git.tar.gz https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.26.2.tar.gz
-# tar -zxf git.tar.gz
-# cd git-*
-# make prefix=/usr/local all
-# sudo make prefix=/usr/local install
-# exec bash
-# git --version
-# git config --global user.name "Your Name"
-# git config --global user.email "youremail@domain.com"
-# git config --list
-# nano ~/.gitconfig
-
-
-# INSTALL KAFKA, ZOOKEEPER, KAFKA-UI
-mkdir -p ~/kafka
-
-echo "
 version: '3'
 
 services:
@@ -83,6 +52,3 @@ services:
 networks:
   kafka-network:
     driver: bridge
-" >> ~/kafka/docker-compose.yml
-
-docker-compose up -d

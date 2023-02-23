@@ -1,0 +1,90 @@
+direction: right
+
+ops: Duy {
+  shape: person
+  style: {
+    fill: "#E8BEAC"
+  }
+
+  private-key
+}
+
+LM: Local Machine {
+  # style: {
+  #   fill: "#f0f0f0"
+  # }
+  # icon: https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/DigitalOcean_logo.svg/1200px-DigitalOcean_logo.svg.png
+
+  producer: Loopback API Producer {
+    shape: image
+    icon: https://seeklogo.com/images/L/loopback-logo-517982E646-seeklogo.com.png
+  }
+
+  consumer: Loopback API Consumer {
+    shape: image
+    icon: https://seeklogo.com/images/L/loopback-logo-517982E646-seeklogo.com.png
+  }
+}
+
+git: Git {
+  shape: cloud
+}
+
+DO: DigitalOcean {
+  style: {
+    fill: "#f0f0f0"
+  }
+  icon: https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/DigitalOcean_logo.svg/1200px-DigitalOcean_logo.svg.png
+
+  droplet: Droplet {
+    public-key
+    kd: Docker
+
+    dnet: Docker Containers Network {
+      kafka: Kafka {
+        shape: image
+        icon: https://w7.pngwing.com/pngs/929/893/png-transparent-apache-kafka-apache-cassandra-logo-apache-http-server-apache-hadoop-beijing-text-logo-windows.png
+      }
+
+      zoo: ZooKeeper
+
+      kafkaui: Kafka UI
+
+      nginx: Nginx Proxy Manager {
+        shape: image
+        icon: https://nginxproxymanager.com/logo.png
+      }
+    }
+    dnet.style.stroke-dash: 5
+  }
+}
+
+tfcloud: TerraformCloud {
+  state
+
+  DigitalOcean Access Token
+}
+
+dr: Docker Registry
+
+ops -> DO.droplet.dnet.nginx
+ops -> LM.producer
+ops -> LM.consumer
+ops -> git: push code
+git -> tfcloud: trigger run (plan -> manual apply)
+
+LM.producer -> DO.droplet.dnet.nginx
+LM.consumer -> DO.droplet.dnet.nginx
+
+DO.droplet.dnet.nginx -> DO.droplet.dnet.kafka
+DO.droplet.dnet.nginx -> DO.droplet.dnet.kafkaui
+
+DO.droplet.dnet.zoo <-> DO.droplet.dnet.kafka
+DO.droplet.dnet.zoo <-> DO.droplet.dnet.kafkaui
+DO.droplet.dnet.kafka <-> DO.droplet.dnet.kafkaui
+
+DO.droplet.kd <-> dr
+DO.droplet.kd -> DO.droplet.dnet
+
+ops -> tfcloud
+tfcloud -> DO
