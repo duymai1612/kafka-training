@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  producer:
+    image: kafka-node-example
+    container_name: producer
+    networks:
+      - kafka-network
+    # depends_on:
+    #   - broker
+    #   - zookeeper
+
+  consumer:
+    image: kafka-node-example
+    container_name: consumer
+    command: ["node", "consumer.js"]
+    networks:
+      - kafka-network
+    # depends_on:
+    #   - broker
+    #   - zookeeper
+
+networks:
+  kafka-network:
+    driver: bridge
