@@ -8,6 +8,12 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
+# INSTALL GIT
+sudo apt update
+sudo apt install git
+git --version
+git clone https://github.com/duymai1612/kafka-training
+
 # INSTALL KAFKA, ZOOKEEPER, KAFKA-UI
 mkdir -p ~/kafka
 cd ~/kafka
